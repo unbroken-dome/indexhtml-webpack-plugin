@@ -32,7 +32,7 @@ IndexHtmlSource.prototype.source = function() {
  * Extracts the HTML code from the module source
  */
 IndexHtmlSource.prototype._getHtmlFromModule = function() {
-    var code = this.sourceModule.source().source()
+    var code = this.sourceModule.source(null, {}).source()
         .replace(/^module\.exports\s*=\s*/, '');
 
     //noinspection JSUnusedLocalSymbols
