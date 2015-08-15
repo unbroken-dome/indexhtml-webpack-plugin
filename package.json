@@ -1,0 +1,28 @@
+{
+  "name": "indexhtml-webpack-plugin",
+  "version": "0.1.4",
+  "description": "Index HTML plugin for Webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/unbroken-dome/indexhtml-webpack-plugin.git"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "author": "Till Krullmann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unbroken-dome/indexhtml-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/unbroken-dome/indexhtml-webpack-plugin#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "URIjs": "^1.16.0",
+    "cheerio": "^0.19.0",
+    "webpack": "^1.11.0"
+  }
+}
