@@ -29,17 +29,6 @@ IndexHtmlSource.prototype.source = function() {
     return $.html();
 };
 
-if (!String.prototype.endsWith) {
-    String.prototype.endsWith = function(searchString, position) {
-        var subjectString = this.toString();
-        if (position === undefined || position > subjectString.length) {
-            position = subjectString.length;
-        }
-        position -= searchString.length;
-        var lastIndex = subjectString.indexOf(searchString, position);
-        return lastIndex !== -1 && lastIndex === position;
-    };
-}
 
 /**
  * Extracts the HTML code from the module source
@@ -115,8 +104,8 @@ IndexHtmlSource.prototype._getHtmlFromModule = function() {
             return undefined;
         }
 
-        if (sourceModule.context.endsWith(path.normalize('webpack-dev-server/client')) ||
-            sourceModule.context.endsWith(path.normalize('webpack/hot'))) {
+        if (_.endsWith(sourceModule.context, path.normalize('webpack-dev-server/client')) ||
+            _.endsWith(sourceModule.context, path.normalize('webpack/hot'))) {
             return undefined;
 
         } else if (moduleWasExtracted(sourceModule)) {
