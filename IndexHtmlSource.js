@@ -1,6 +1,7 @@
 var path = require('path');
 var cheerio = require('cheerio');
 var URI = require('URIjs');
+var _ = require('lodash');
 var Source = require('webpack/lib/Source');
 
 /**
@@ -72,7 +73,7 @@ IndexHtmlSource.prototype._getHtmlFromModule = function() {
         var options = getExtractTextLoaderOptions(module);
         var loaderId = options && options.id;
 
-        var extractTextPlugin = find(compilation.compiler.options.plugins,
+        var extractTextPlugin = _.find(compilation.compiler.options.plugins,
             function (p) {
                 return (p.constructor.name === 'ExtractTextPlugin') &&
                     ((typeof(p.id) === "undefined" && typeof(loaderId) === "undefined") || (p.id === loaderId));
@@ -93,7 +94,7 @@ IndexHtmlSource.prototype._getHtmlFromModule = function() {
             });
         filenamePattern = new RegExp(filenamePattern);
 
-        return find(sourceChunk.files, function(filename) {
+        return _.find(sourceChunk.files, function(filename) {
             return filename.match(filenamePattern);
         });
     }
@@ -103,7 +104,7 @@ IndexHtmlSource.prototype._getHtmlFromModule = function() {
 
         var sourceModule;
         if (typeof moduleId === "number") {
-            sourceModule = find(compilation.modules, function (m) {
+            sourceModule = _.find(compilation.modules, function (m) {
                 return m.id === moduleId;
             });
         } else {
@@ -151,12 +152,12 @@ IndexHtmlSource.prototype._resolveScripts = function($) {
             if (!scriptSrcUri.is('absolute')) {
 
                 var entry = path.resolve(sourceContext, scriptSrc);
-                var moduleForEntry = find(compilation.modules, function (module) {
+                var moduleForEntry = _.find(compilation.modules, function (module) {
                     return path.normalize(module.resource) === entry
                 });
                 if (moduleForEntry) {
                     var chunkForEntry = moduleForEntry.chunks[0];
-                    var chunkJsFile = find(chunkForEntry.files, function (file) {
+                    var chunkJsFile = _.find(chunkForEntry.files, function (file) {
                         return new URI(file).filename().match(/\.js$/)
                     });
                     if (chunkJsFile) {
@@ -167,19 +168,6 @@ IndexHtmlSource.prototype._resolveScripts = function($) {
         }
     });
 };
-
-
-function find(array, predicate) {
-    if (array) {
-        for (var i = 0; i < array.length; i++) {
-            var item = array[i];
-            if (predicate(item)) {
-                return item;
-            }
-        }
-    }
-    return undefined;
-}
 
 
 function regexpQuote(s) {
