@@ -142,7 +142,7 @@ IndexHtmlSource.prototype._resolveScripts = function($) {
 
                 var entry = path.resolve(sourceContext, scriptSrc);
                 var moduleForEntry = _.find(compilation.modules, function (module) {
-                    return path.normalize(module.resource) === entry
+                    return module.resource && path.normalize(module.resource) === entry
                 });
                 if (moduleForEntry) {
                     var chunkForEntry = moduleForEntry.chunks[0];
