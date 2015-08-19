@@ -121,6 +121,10 @@ IndexHtmlSource.prototype._getHtmlFromModule = function() {
         }
     }
 
+    // This is where the "real" __webpack_require__ would store the public path,
+    // it is used by url-loader to construct the link
+    __webpack_require__.p = compilation.options.output.publicPath || '';
+
     return __webpack_require__(this.sourceModule);
 };
 
