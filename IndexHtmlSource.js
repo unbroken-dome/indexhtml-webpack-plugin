@@ -154,7 +154,7 @@ IndexHtmlSource.prototype._resolveScripts = function($) {
                         return new URI(file).filename().match(/\.js$/)
                     });
                     if (chunkJsFile) {
-                        $(this).attr('src', chunkJsFile);
+                        $(this).attr('src', (compilation.options.output.publicPath || '') + chunkJsFile);
                     }
                 }
             }
