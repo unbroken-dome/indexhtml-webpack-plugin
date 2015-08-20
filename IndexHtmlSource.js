@@ -109,7 +109,7 @@ IndexHtmlSource.prototype._getHtmlFromModule = function() {
             return undefined;
 
         } else if (moduleWasExtracted(sourceModule)) {
-            return getExtractedFilename(sourceModule);
+            return (compilation.options.output.publicPath || '') + getExtractedFilename(sourceModule);
 
         } else {
             var module = {};
