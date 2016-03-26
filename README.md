@@ -64,7 +64,7 @@ module.exports = {
     // ...
     
     plugins: [
-        new IndexHtmlPlugin('index.html', 'index.html')
+        new IndexHtmlPlugin()
     ]
     
     // ...
@@ -117,9 +117,32 @@ module.exports = {
     
     plugins: [
         cssExtractPlugin,
-        new IndexHtmlPlugin('index.html', 'index.html')
+        new IndexHtmlPlugin()
     ]
 };
+```
+
+### Options
+
+IndexHtmlPlugin takes an optional `options` object as a parameter to override
+the files it processes.
+
+#### test
+The `test` property on the `options` is a RegExp that the source file must
+match for IndexHtmlPlugin to process it.  Defaults to `/\.html$/`.
+
+#### exclude
+The `exclude` property on the `options` is a RegExp that the source file must
+*not* match for IndexHtmlPlugin to process it. If `undefined`, no files
+that match `test` will be excluded. Defaults to `undefined`.
+
+#### Example:
+
+```
+new IndexHtmlPlugin({
+  test: /\.html?$/,    // handle .htm and .html files
+  exclude: /^other\.html$/, // exclude other.html
+})
 ```
 
 ## License
