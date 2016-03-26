@@ -1,15 +1,32 @@
 var IndexHtmlSource = require('./IndexHtmlSource');
 
-function IndexHtmlPlugin() {
+function IndexHtmlPlugin(options) {
+    options = options || {};
+
+    if (!options.test) {
+      options.test = /\.html$/;
+    }
+
+    var matches = function(source) {
+        if (!options.test.test(source)) {
+            return false;
+        }
+
+        if (options.exclude && options.exclude.test(source)) {
+            return false;
+        }
+
+        return true;
+    };
+
     this.apply = function apply(compiler) {
 
         compiler.plugin('this-compilation', function (compilation) {
 
-
             compilation.plugin('additional-chunk-assets', function additionalChunkAssets() {
 
                 Object.keys(this.namedChunks).forEach(function (source) {
-                    if (/\.html$/.test(source)) {
+                    if (matches(source)) {
                         var sourceChunk = this.namedChunks[source];
                         var sourceModule = sourceChunk.origins[0].module;
 
@@ -26,7 +43,7 @@ function IndexHtmlPlugin() {
 
             Object.keys(compilation.assets).forEach(function (file) {
                 Object.keys(compilation.namedChunks).forEach(function (source) {
-                    if (/\.html$/.test(source)) {
+                    if (matches(source)) {
                         var targetFile = file;
                         var queryStringIdx = targetFile.indexOf('?');
                         if (queryStringIdx >= 0) {
